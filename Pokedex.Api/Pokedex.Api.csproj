@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Pokedex.CommandsAndQueries\Pokedex.CommandsAndQueries.csproj" />
       <ProjectReference Include="..\Pokedex.External.Pokeapi\Pokedex.External.Pokeapi.csproj" />
     </ItemGroup>
 
