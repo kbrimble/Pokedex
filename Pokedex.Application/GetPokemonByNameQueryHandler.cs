@@ -21,7 +21,7 @@ public class GetPokemonByNameQueryHandler : IQueryHandler<GetPokemonByNameQuery,
 
     public async Task<Pokemon> Execute(GetPokemonByNameQuery query)
     {
-        await _validator.ValidateAsync(query);
+        await _validator.ValidateAndThrowAsync(query);
 
         try
         {

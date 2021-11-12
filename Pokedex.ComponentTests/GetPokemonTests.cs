@@ -1,9 +1,11 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Pokedex.Api;
 using Pokedex.External.Pokeapi;
 using Xunit;
@@ -49,5 +51,35 @@ public class GetPokemonTests
         var result = await client.GetAsync("/pokemon/does-not-exist");
 
         result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task GetPokemonReturnsInternalServerErrorWhenGettingPokemonFails()
+    {
+        await using var application = new PokedexApplication();
+
+        var pokeapiService = application.Services.GetRequiredService<IPokeapiService>();
+        pokeapiService.GetPokemonId(Arg.Any<string>()).Throws<TimeoutException>();
+
+        var client = application.CreateClient();
+
+        var result = await client.GetAsync("/pokemon/pikachu");
+
+        result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+    }
+
+    [Fact]
+    public async Task GetPokemonReturnsBadRequestWhenGettingPokemonWithInvalidName()
+    {
+        await using var application = new PokedexApplication();
+
+        var pokeapiService = application.Services.GetRequiredService<IPokeapiService>();
+        pokeapiService.GetPokemonId(Arg.Any<string>()).Throws<TimeoutException>();
+
+        var client = application.CreateClient();
+
+        var result = await client.GetAsync("/pokemon/pika chu");
+
+        result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

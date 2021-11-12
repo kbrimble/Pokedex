@@ -8,6 +8,6 @@ public class GetPokemonByNameQueryValidator : AbstractValidator<GetPokemonByName
 {
     public GetPokemonByNameQueryValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().Matches("[\\w-]+").WithMessage("'{PropertyName}' can only contain letters, numbers and dashes");
+        RuleFor(x => x.Name).NotEmpty().Matches("^([a-zA-Z0-9-])+$").WithMessage("'{PropertyName}' can only contain letters, numbers and dashes");
     }
 }
