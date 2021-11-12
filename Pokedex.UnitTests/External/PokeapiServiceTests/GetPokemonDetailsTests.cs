@@ -28,7 +28,7 @@ public class GetPokemonDetailsTests
 
         var expected = new PokemonDetails(150, "mewtwo", "It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments.", "rare", true);
 
-        ShouldBeEquivalent(result, expected);
+        TestHelpers.ShouldBeEquivalent(result, expected);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class GetPokemonDetailsTests
 
         var result = await sut.GetPokemonDetails(1000);
 
-        ShouldBeEquivalent(result, PokemonDetails.Empty);
+        TestHelpers.ShouldBeEquivalent(result, PokemonDetails.Empty);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class GetPokemonDetailsTests
 
         var expected = new PokemonDetails(150, "mewtwo", "", "rare", true);
 
-        ShouldBeEquivalent(result, expected);
+        TestHelpers.ShouldBeEquivalent(result, expected);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class GetPokemonDetailsTests
 
         var expected = new PokemonDetails(150, "mewtwo", "", "rare", true);
 
-        ShouldBeEquivalent(result, expected);
+        TestHelpers.ShouldBeEquivalent(result, expected);
     }
 
     [Fact]
@@ -115,11 +115,8 @@ public class GetPokemonDetailsTests
 
         var expected = new PokemonDetails(150, "mewtwo", flavourText1, "rare", true);
 
-        ShouldBeEquivalent(result, expected);
+        TestHelpers.ShouldBeEquivalent(result, expected);
     }
-
-    private static void ShouldBeEquivalent(PokemonDetails actual, PokemonDetails expected)
-        => actual.Should().BeEquivalentTo(expected, opts => opts.ComparingByMembers<PokemonDetails>());
 
     private static ApiResponse<PokemonDetailsResponse> BuildApiResponse(HttpStatusCode httpStatusCode, PokemonDetailsResponse? detailsResponse)
         => new(new HttpResponseMessage(httpStatusCode), detailsResponse!, new RefitSettings());

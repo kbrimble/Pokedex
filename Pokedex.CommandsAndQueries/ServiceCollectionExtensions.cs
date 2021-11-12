@@ -8,8 +8,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddTransient<IValidator<GetPokemonIdQuery>, GetPokemonIdQueryValidator>();
-        services.AddTransient<IValidator<GetPokemonDetailsQuery>, GetPokemonDetailsQueryValidator>();
+        services.AddTransient<IValidator<GetPokemonByNameQuery>, GetPokemonByNameQueryValidator>();
 
         return services;
     }

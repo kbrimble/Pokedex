@@ -4,16 +4,16 @@ using Xunit;
 
 namespace Pokedex.UnitTests.CommandsAndQueries;
 
-public class GetPokemonIdQueryValidatorTests
+public class GetPokemonByNameQueryValidatorTests
 {
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     public void ValidationErrorWhenNameIsNullOrEmpty(string? name)
     {
-        var sut = new GetPokemonIdQueryValidator();
+        var sut = new GetPokemonByNameQueryValidator();
 
-        var result = sut.TestValidate(new GetPokemonIdQuery(name!));
+        var result = sut.TestValidate(new GetPokemonByNameQuery(name!));
 
         result.ShouldHaveValidationErrorFor(x => x.Name);
     }
@@ -24,9 +24,9 @@ public class GetPokemonIdQueryValidatorTests
     [InlineData("this has spaces")]
     public void ShouldHaveValidationErrorWhenNameDoesNotOnlyContainsLettersDashesAndNumbers(string name)
     {
-        var sut = new GetPokemonIdQueryValidator();
+        var sut = new GetPokemonByNameQueryValidator();
 
-        var result = sut.TestValidate(new GetPokemonIdQuery(name));
+        var result = sut.TestValidate(new GetPokemonByNameQuery(name));
 
         result.ShouldNotHaveValidationErrorFor(x => x.Name);
     }
@@ -38,9 +38,9 @@ public class GetPokemonIdQueryValidatorTests
     [InlineData("a-m1x-of-aLL-3")]
     public void ShouldNotHaveValidationErrorWhenNameOnlyContainsLettersDashesAndNumbers(string name)
     {
-        var sut = new GetPokemonIdQueryValidator();
+        var sut = new GetPokemonByNameQueryValidator();
 
-        var result = sut.TestValidate(new GetPokemonIdQuery(name));
+        var result = sut.TestValidate(new GetPokemonByNameQuery(name));
 
         result.ShouldNotHaveAnyValidationErrors();
     }

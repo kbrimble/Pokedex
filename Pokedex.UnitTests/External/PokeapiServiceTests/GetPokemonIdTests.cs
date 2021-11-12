@@ -26,7 +26,7 @@ public class GetPokemonIdTests
 
         var expected = new PokemonId(150, "mewtwo");
 
-        ShouldBeEquivalent(result, expected);
+        TestHelpers.ShouldBeEquivalent(result, expected);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class GetPokemonIdTests
 
         var result = await sut.GetPokemonId("mewthree");
 
-        ShouldBeEquivalent(result, PokemonId.Empty);
+        TestHelpers.ShouldBeEquivalent(result, PokemonId.Empty);
     }
 
     [Fact]
@@ -64,9 +64,6 @@ public class GetPokemonIdTests
 
         act.Should().Throw<FailedToRetrievePokemonDetailsException>();
     }
-
-    private static void ShouldBeEquivalent(PokemonId actual, PokemonId expected)
-        => actual.Should().BeEquivalentTo(expected, opts => opts.ComparingByMembers<PokemonId>());
 
     private static ApiResponse<PokemonIdResponse> BuildApiResponse(HttpStatusCode httpStatusCode, PokemonIdResponse? idResponse)
         => new(new HttpResponseMessage(httpStatusCode), idResponse!, new RefitSettings());
