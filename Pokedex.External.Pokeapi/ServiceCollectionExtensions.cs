@@ -12,9 +12,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    private static readonly AsyncRetryPolicy<HttpResponseMessage> RetryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+    private static readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
         .WaitAndRetryAsync<HttpResponseMessage>(RetryAttempts, (Func<int, TimeSpan>)(retryAttempt => TimeSpan.FromSeconds(Math.Pow(2.0, retryAttempt))));
-    private static readonly AsyncCircuitBreakerPolicy<HttpResponseMessage> CircuitBreakerPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+    private static readonly AsyncCircuitBreakerPolicy<HttpResponseMessage> _circuitBreakerPolicy = HttpPolicyExtensions.HandleTransientHttpError()
         .CircuitBreakerAsync<HttpResponseMessage>(RetryAttempts, TimeSpan.FromSeconds(10.0));
 
     private const int RetryAttempts = 3;
@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
                 var settings = provider.GetRequiredService<IOptions<PokeapiConfiguration>>();
                 client.BaseAddress = new Uri(settings.Value.BaseUrl);
             })
-            .AddPolicyHandler(RetryPolicy.WrapAsync(CircuitBreakerPolicy));
+            .AddPolicyHandler(_retryPolicy.WrapAsync(_circuitBreakerPolicy));
         return services;
     }
 }

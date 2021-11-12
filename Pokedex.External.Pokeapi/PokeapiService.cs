@@ -81,7 +81,7 @@ public class PokeapiService : IPokeapiService
             ? PokemonDetails.Empty
             : new PokemonDetails(responseContent.Id,
                 responseContent.Name,
-                responseContent.FlavorTextEntries.FirstOrDefault(ft => ft.Language.Name == "en")?.FlavourText ?? string.Empty,
+                responseContent.FlavorTextEntries.FirstOrDefault(ft => ft.Language.Name == "en")?.FlavorText ?? string.Empty,
                 responseContent.Habitat.Name,
                 responseContent.IsLegendary);
 

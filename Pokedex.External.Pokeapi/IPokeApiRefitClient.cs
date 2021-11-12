@@ -1,11 +1,19 @@
-﻿using Refit;
+﻿using System.Text.Json.Serialization;
+using Refit;
 
 namespace Pokedex.External.Pokeapi;
 
 public record PokemonIdResponse(int Id, string Name);
-public record PokemonDetailsResponse(int Id, string Name, PokemonSpeciesHabitat Habitat, bool IsLegendary, IEnumerable<PokemonFlavourTextEntry> FlavorTextEntries);
+public record PokemonDetailsResponse(
+    int Id,
+    string Name,
+    PokemonSpeciesHabitat Habitat,
+    bool IsLegendary,
+    [property: JsonPropertyName("flavor_text_entries")] List<PokemonFlavourTextEntry> FlavorTextEntries);
 public record PokemonSpeciesHabitat(string Name);
-public record PokemonFlavourTextEntry(string FlavourText, FlavourTextLanguage Language);
+public record PokemonFlavourTextEntry(
+    [property: JsonPropertyName("flavor_text")] string FlavorText,
+    FlavourTextLanguage Language);
 public record FlavourTextLanguage(string Name);
 
 public interface IPokeApiRefitClient
