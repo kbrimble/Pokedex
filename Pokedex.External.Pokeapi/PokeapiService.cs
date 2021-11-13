@@ -81,9 +81,13 @@ public class PokeapiService : IPokeapiService
             ? PokemonDetails.Empty
             : new PokemonDetails(responseContent.Id,
                 responseContent.Name,
-                responseContent.FlavorTextEntries.FirstOrDefault(ft => ft.Language.Name == "en")?.FlavorText ?? string.Empty,
+                Map(responseContent.FlavorTextEntries),
                 responseContent.Habitat.Name,
                 responseContent.IsLegendary);
+
+    // TODO: filter out escape characters and replace with something nicer.
+    private static string Map(IEnumerable<PokemonFlavourTextEntry> flavourTextEntries)
+        => flavourTextEntries.FirstOrDefault(ft => ft.Language.Name == "en")?.FlavorText ?? string.Empty;
 
     private static PokemonId Map(PokemonIdResponse? responseContent)
         => responseContent is null

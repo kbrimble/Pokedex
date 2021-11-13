@@ -1,5 +1,13 @@
 ﻿namespace Pokedex.Api;
 
+/// <summary>
+/// Response with details of Pokemon
+/// </summary>
+/// <param name="Id"></param>
+/// <param name="Name"></param>
+/// <param name="Description"></param>
+/// <param name="Habitat"></param>
+/// <param name="IsLegendary"></param>
 public record PokemonResponse(int Id, string Name, string Description, string Habitat, bool IsLegendary)
 {
     /// <summary> Id of Pokemon </summary>
