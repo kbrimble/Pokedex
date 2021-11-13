@@ -27,7 +27,7 @@ public class GetPokemonByNameQueryHandlerTests
     [Fact]
     public void ExceptionIsThrownIfValidationFails()
     {
-        _validator.ValidateAsync(Arg.Any<GetPokemonByNameQuery>()).Throws(new ValidationException("Invalid"));
+        _validator.ValidateAsync(Arg.Any<ValidationContext<GetPokemonByNameQuery>>()).ThrowsForAnyArgs(new ValidationException("Invalid"));
         var sut = GetSut();
 
         Func<Task> act = async () => await sut.Execute(new GetPokemonByNameQuery("1234"));

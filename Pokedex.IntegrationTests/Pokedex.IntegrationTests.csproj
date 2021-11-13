@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Pokedex.External.FunTranslations\Pokedex.External.FunTranslations.csproj" />
       <ProjectReference Include="..\Pokedex.External.Pokeapi\Pokedex.External.Pokeapi.csproj" />
     </ItemGroup>
 

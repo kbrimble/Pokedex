@@ -21,7 +21,10 @@ public class GetPokemonByNameQueryHandler : IQueryHandler<GetPokemonByNameQuery,
 
     public async Task<Pokemon> Execute(GetPokemonByNameQuery query)
     {
-        await _validator.ValidateAndThrowAsync(query);
+        // This is a workaround to throw on validation error but also make this method testable.
+        // The solution here is to wrap validation in another service and to mock that but I've
+        // left that out here.
+        await _validator.ValidateAsync(query, options => options.ThrowOnFailures());
 
         try
         {

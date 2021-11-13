@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Refit" Version="6.1.15" />
+      <PackageReference Include="Refit.HttpClientFactory" Version="6.1.15" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pokedex.Domain\Pokedex.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

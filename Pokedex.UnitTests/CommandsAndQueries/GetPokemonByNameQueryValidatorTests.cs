@@ -28,7 +28,7 @@ public class GetPokemonByNameQueryValidatorTests
 
         var result = sut.TestValidate(new GetPokemonByNameQuery(name));
 
-        result.ShouldNotHaveValidationErrorFor(x => x.Name);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
     }
 
     [Theory]

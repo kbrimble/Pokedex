@@ -64,6 +64,7 @@ public class PokeapiService : IPokeapiService
             if (!response.IsSuccessStatusCode)
                 throw new FailedToRetrievePokemonSpeciesException(id, response.StatusCode, response.ReasonPhrase);
 
+            _logger.LogDebug("Found Pokemon details for {Id}", id);
             return Map(response.Content);
         }
         catch (Exception e)
