@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IQueryHandler<GetPokemonByNameQuery, Pokemon>, GetPokemonByNameQueryHandler>();
         services.AddTransient<IQueryHandler<GetTranslatedTextQuery, string>, GetTranslatedTextQueryHandler>();
+        services.AddTransient<IQueryHandler<GetPokemonWithTranslatedDescriptionQuery, Pokemon>, GetPokemonWithTranslatedDescriptionQueryHandler>();
         return services;
     }
 }
