@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddValidators()
     .AddCommandAndQueryHandlers()
-    .AddPokeapiIntegration(builder.Configuration);
+    .AddPokeapiIntegration(builder.Configuration)
+    .AddFunTranslationsIntegration(builder.Configuration);
 
 builder.Services
     .AddControllers();

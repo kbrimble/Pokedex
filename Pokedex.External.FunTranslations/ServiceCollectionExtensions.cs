@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
     private static readonly AsyncCircuitBreakerPolicy<HttpResponseMessage> _circuitBreakerPolicy =
         Policy<HttpResponseMessage>
             .HandleResult(response => response.StatusCode == HttpStatusCode.TooManyRequests)
-            .CircuitBreakerAsync(0, TimeSpan.FromMinutes(10));
+            .CircuitBreakerAsync(1, TimeSpan.FromMinutes(10));
 
     public static IServiceCollection AddFunTranslationsIntegration(this IServiceCollection services, IConfiguration configuration)
     {

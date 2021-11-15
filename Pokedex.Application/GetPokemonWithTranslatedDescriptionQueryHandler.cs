@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FluentValidation;
+using Microsoft.Extensions.Logging;
 using Pokedex.CommandsAndQueries;
 using Pokedex.Domain;
 
@@ -22,14 +23,15 @@ public class GetPokemonWithTranslatedDescriptionQueryHandler : IQueryHandler<Get
 
     public async Task<Pokemon> Execute(GetPokemonWithTranslatedDescriptionQuery query)
     {
-        var (name, translationType) = query;
         try
         {
-            _logger.LogDebug("Getting Pokemon with name {Name}", name);
-            var pokemon = await _getPokemonQuery.Execute(new GetPokemonByNameQuery(name));
+            _logger.LogDebug("Getting Pokemon with name {Name}", query.Name);
+            var pokemon = await _getPokemonQuery.Execute(new GetPokemonByNameQuery(query.Name));
 
             if (pokemon == Pokemon.Empty)
                 return Pokemon.Empty;
+
+            var translationType = pokemon.Habitat == "cave" || pokemon.IsLegendary ? TranslationType.Yoda : TranslationType.Shakespeare;
 
             _logger.LogDebug("Found Pokemon with name, translating description to type {TranslationType}", translationType);
             var translatedDescription = await _getTranslatedTextQuery.Execute(new GetTranslatedTextQuery(pokemon.Description, translationType));
@@ -40,7 +42,11 @@ public class GetPokemonWithTranslatedDescriptionQueryHandler : IQueryHandler<Get
         }
         catch (Exception e)
         {
-            throw new FailedToGetPokemonWithTranslatedDescriptionException(name, translationType, e);
+            throw e switch
+            {
+                ValidationException => e,
+                _ => throw new FailedToGetPokemonWithTranslatedDescriptionException(query.Name, e)
+            };
         }
     }
 }

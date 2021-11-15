@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NSubstitute;
+using Pokedex.External.FunTranslations;
 using Pokedex.External.Pokeapi;
 
 namespace Pokedex.ComponentTests;
@@ -17,6 +18,7 @@ public class PokedexApplication : WebApplicationFactory<Program>
         builder.ConfigureTestServices(services =>
         {
             services.Stub<IPokeapiService>();
+            services.Stub<IFunTranslationService>();
         });
     }
 }

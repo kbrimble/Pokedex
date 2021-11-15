@@ -13,9 +13,9 @@ public class FailedToGetPokemonException : Exception
 
 public class FailedToGetPokemonWithTranslatedDescriptionException : Exception
 {
-    public FailedToGetPokemonWithTranslatedDescriptionException(string name, TranslationType translationType, Exception innerException)
-        : base(GetMessage(name, translationType), innerException) { }
+    public FailedToGetPokemonWithTranslatedDescriptionException(string name, Exception innerException)
+        : base(GetMessage(name), innerException) { }
 
-    private static string GetMessage(string name, TranslationType translationType)
-        => $"Failed to get Pokemon with name {name} and description translated to type {translationType}";
+    private static string GetMessage(string name)
+        => $"Failed to get Pokemon with translated description for name {name}";
 }

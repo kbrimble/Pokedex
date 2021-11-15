@@ -7,7 +7,7 @@ public record GetPokemonByNameQuery(string Name) : IQuery;
 
 public record GetTranslatedTextQuery(string InputText, TranslationType TranslationType) : IQuery;
 
-public record GetPokemonWithTranslatedDescriptionQuery(string Name, TranslationType TranslationType) : IQuery;
+public record GetPokemonWithTranslatedDescriptionQuery(string Name) : IQuery;
 
 public class GetPokemonByNameQueryValidator : AbstractValidator<GetPokemonByNameQuery>
 {
