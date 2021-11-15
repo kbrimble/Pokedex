@@ -3,6 +3,12 @@ using Pokedex.Domain;
 
 namespace Pokedex.External.FunTranslations;
 
+
+public class FunTranslationsConfiguration
+{
+    public string BaseUrl { get; set; } = string.Empty;
+}
+
 public class FailedToTranslateTextException : Exception
 {
     public FailedToTranslateTextException(TranslationType translationType, HttpStatusCode statusCode, string? message)

@@ -9,7 +9,7 @@ public class GetPokemonByNameQueryValidatorTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public void ValidationErrorWhenNameIsNullOrEmpty(string? name)
+    public void ShouldHaveValidationErrorWhenNameIsNullOrEmpty(string? name)
     {
         var sut = new GetPokemonByNameQueryValidator();
 

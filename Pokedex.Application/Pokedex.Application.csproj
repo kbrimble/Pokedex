@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Pokedex.CommandsAndQueries\Pokedex.CommandsAndQueries.csproj" />
       <ProjectReference Include="..\Pokedex.Domain\Pokedex.Domain.csproj" />
+      <ProjectReference Include="..\Pokedex.External.FunTranslations\Pokedex.External.FunTranslations.csproj" />
       <ProjectReference Include="..\Pokedex.External.Pokeapi\Pokedex.External.Pokeapi.csproj" />
     </ItemGroup>
 

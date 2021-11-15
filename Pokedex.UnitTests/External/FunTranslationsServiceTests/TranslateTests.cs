@@ -8,6 +8,7 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Pokedex.Domain;
 using Pokedex.External.FunTranslations;
+using Polly.CircuitBreaker;
 using Xunit;
 using static Pokedex.UnitTests.TestHelpers;
 
@@ -71,4 +72,17 @@ public class TranslateTests
 
         act.Should().Throw<FailedToTranslateTextException>().WithInnerException<FormatException>();
     }
+
+    [Fact]
+    public async Task EmptyResultIsReturnedWhenCircuitIsBroken()
+    {
+        var refitClient = Substitute.For<IFunTranslationsRefitClient>();
+        refitClient.Translate(Arg.Any<string>(), Arg.Any<Dictionary<string, object>>()).Throws<BrokenCircuitException>();
+        var sut = new FunTranslationService(refitClient, new NullLogger<FunTranslationService>());
+
+        var result = await sut.Translate("some input text", TranslationType.Yoda);
+
+        result.Should().BeEmpty();
+    }
+
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pokedex.Domain;
+using Polly.CircuitBreaker;
 
 namespace Pokedex.External.FunTranslations;
 
@@ -32,8 +33,14 @@ public class FunTranslationService : IFunTranslationService
             _logger.LogDebug("Returning translation for type {TranslationType}", translationType);
             return response.Content?.Contents?.Translated ?? string.Empty;
         }
+        catch (BrokenCircuitException)
+        {
+            _logger.LogInformation("Cannot translate text to {TranslationType} as the request has been rate limited", translationType);
+            return string.Empty;
+        }
         catch (Exception e)
         {
+            _logger.LogError(e, "Failed to translate text to type {TranslationType}", translationType);
             throw e switch
             {
                 FailedToTranslateTextException => e,

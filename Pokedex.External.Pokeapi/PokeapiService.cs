@@ -41,6 +41,7 @@ public class PokeapiService : IPokeapiService
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Failed to retrieve Pokemon ID for name {Name}", name);
             throw e switch
             {
                 FailedToRetrievePokemonDetailsException => e,
@@ -69,6 +70,7 @@ public class PokeapiService : IPokeapiService
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Failed to retrieve Pokemon details for ID {Id}", id);
             throw e switch
             {
                 FailedToRetrievePokemonSpeciesException => e,
